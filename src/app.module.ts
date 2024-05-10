@@ -26,8 +26,8 @@ import { StockModule } from './stock/stock.module';
                 }
             }
         }),
+        
         StockModule,
-
     ],
     controllers: [StockController]
 })
