@@ -17,4 +17,3 @@ The application should periodically check the prices and calculate the moving av
 2. Run `docker compose up -d`
 
     `docker logs -f --tail 100 {database|webapp}` with this command you can see a rolling log for either the `database` or the `webapp` service
-

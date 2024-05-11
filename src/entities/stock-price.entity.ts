@@ -28,7 +28,7 @@ export class StockPrice {
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP'
   })
-  timestamp: number;
+  timestamp: Date;
 
   public init(data: IStockPriceInit): StockPrice {
     this.symbolId = data.symbolId;

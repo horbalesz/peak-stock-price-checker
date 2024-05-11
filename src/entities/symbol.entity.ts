@@ -6,8 +6,12 @@ export class Symbol {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 6 })
-  symbol: string;
+  @Column({
+    type: 'varchar',
+    length: 5,
+    unique: true,
+  })
+  name: string;
 
   @Column({ type: 'bool', default: true })
   isUpdating: boolean;

@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { StockController } from './stock/stock.controller';
 import { StockModule } from './stock/stock.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
     imports: [
@@ -26,7 +27,8 @@ import { StockModule } from './stock/stock.module';
                 }
             }
         }),
-        
+        ScheduleModule.forRoot(),
+
         StockModule,
     ],
     controllers: [StockController]
