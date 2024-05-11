@@ -1,0 +1,50 @@
+{
+	"info": {
+		"_postman_id": "11095485-a233-4945-8cce-3897c77b620f",
+		"name": "Peak Finnhub Stock Price Checker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5781237"
+	},
+	"item": [
+		{
+			"name": "Stock price",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stock/aapl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stock",
+						"aapl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add symbol",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/stock/AAPL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"stock",
+						"AAPL"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
