@@ -1,14 +1,20 @@
 import * as finnhub from 'finnhub';
 import { Repository } from 'typeorm';
 import { Cron } from '@nestjs/schedule';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { Symbol } from '../entities/symbol.entity';
 import { StockPrice } from '../entities/stock-price.entity';
 
-import { FinnhubClientResponse, FinnhubStockQuote, GetAverageStockPricePayload, STATUS_SUCCESSFUL, StatusPayload } from './stock.model';
-import { ConfigService } from '@nestjs/config';
+import {
+    FinnhubClientResponse,
+    FinnhubStockQuote,
+    GetAverageStockPricePayload,
+    STATUS_SUCCESSFUL,
+    StatusPayload
+} from './stock.model';
 
 @Injectable()
 export class StockService {
