@@ -24,7 +24,7 @@ const mockFinnhub = {
 jest.mock('finnhub', () => mockFinnhub)
 
 import { StockService } from './stock.service';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('StockService', () => {
   let service: StockService;
@@ -115,7 +115,7 @@ describe('StockService', () => {
     it('should add the requested symbol to the database', async () => {
       const symbol = 'TEST';
       quoteSpy.mockImplementation((symbol, cb) => {
-        cb(null, { c: 1 }, {})
+        cb(null, { c: 1 }, {});
       });
       symbolRepository.findOneBy.mockResolvedValue(null);
       symbolRepository.save.mockResolvedValue({
@@ -129,6 +129,52 @@ describe('StockService', () => {
         price: 1,
         symbolId: 1
       });
+    });
+
+    it('should throw an exception if the symbol is already in the database', async () => {
+      const symbol = 'TEST';
+      quoteSpy.mockImplementation((symbol, cb) => {
+        cb(null, { c: 1 }, {});
+      });
+      symbolRepository.findOneBy.mockResolvedValue({ id: 1 });
+      
+      try {
+        await service.addSymbol(symbol);
+        fail()
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequestException);
+        expect(error.message).toEqual('Symbol already added');
+      }
+    });
+
+    it('should throw an exception if finnhub does not have info on the symbol', async () => {
+      const symbol = 'TEST';
+      quoteSpy.mockImplementation((symbol, cb) => {
+        cb(null, { c: 0 }, {});
+      });
+      
+      try {
+        await service.addSymbol(symbol);
+        fail()
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toEqual('Symbol not found');
+      }
+    });
+
+    it('should throw an exception if finnhub has a problem connecting', async () => {
+      const symbol = 'TEST';
+      quoteSpy.mockImplementation((symbol, cb) => {
+        cb({ error: 'error' }, {}, {});
+      });
+      
+      try {
+        await service.addSymbol(symbol);
+        fail()
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequestException);
+        expect(error.message).toEqual('Error while fetching stock info');
+      }
     });
   })
 });
